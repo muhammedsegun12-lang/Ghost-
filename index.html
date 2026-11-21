@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GHOST</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#000;color:#E8C566;min-height:100vh;display:flex;justify-content:center}
+.app{width:100%;max-width:420px;min-height:100vh;padding:16px 14px 90px;text-align:center;position:relative}
+.hidden{display:none!important}
+h1{font-size:48px;letter-spacing:6px;margin:8px 0 5px}
+h1.big{font-size:64px}
+.ghost{font-size:90px;line-height:1}.book{font-size:70px;margin:-16px 0 14px}
+.welcome-txt{font-size:13px;letter-spacing:2px;line-height:1.8;margin-bottom:22px}
+.card{border:1.5px solid #D4AF37;border-radius:18px;padding:18px 14px;text-align:center;margin-bottom:12px}
+.card h2{font-size:18px;margin-bottom:6px}.sub{font-size:13px;margin-bottom:14px;line-height:1.5;color:#fff}
+.btn{width:100%;padding:15px;border-radius:12px;font-size:16px;font-weight:bold;cursor:pointer;margin-bottom:10px}
+.btn-o{background:#000;color:#E8C566;border:1.5px solid #D4AF37}
+.btn-g{background:#E8C566;color:#000;border:none}
+.btn:active{opacity:.85}.or{margin:12px 0;font-size:13px}
+.field{position:relative;margin-bottom:12px}
+.field input,.field textarea,.field select{width:100%;background:#000;border:1.5px solid #D4AF37;border-radius:12px;color:#E8C566;padding:14px;font-size:15px;outline:none}
+.field textarea{height:70px;resize:none}
+.field input::placeholder,.field textarea::placeholder{color:#D4AF37}
+.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:18px;cursor:pointer}
+.small{font-size:13px;margin:6px 0 12px;cursor:pointer;color:#fff}.line{border:0;border-top:.5px solid #D4AF37;margin:10px 0 14px}
+.msg{font-size:13px;min-height:18px;margin:6px 0;color:#fff}.back{background:none;border:none;color:#E8C566;font-size:14px;cursor:pointer;margin-bottom:10px;text-align:left;display:block}
+.dob{display:flex;gap:8px;margin-bottom:14px}.dob select{flex:1}
+.code-row{display:flex;gap:8px;justify-content:center;margin:14px 0}
+.code-row input{width:42px;height:50px;text-align:center;font-size:19px;background:#000;border:1.5px solid #D4AF37;border-radius:8px;color:#E8C566;outline:none}
+.demo{font-size:12px;color:#fff;background:#222;padding:8px;border-radius:8px;margin-bottom:10px}
+.topbar{display:flex;justify-content:space-between;align-items:center;border:1.5px solid #D4AF37;border-radius:12px;padding:10px;margin-bottom:12px;text-align:left}
+.topbar b{font-size:18px}.coins{background:#E8C566;color:#000;border-radius:20px;padding:5px 10px;font-weight:bold;font-size:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.tab{border:1px solid #D4AF37;border-radius:20px;padding:7px 10px;font-size:12px;cursor:pointer;background:#000;color:#E8C566}
+.tab.on{background:#E8C566;color:#000;font-weight:bold}
+.post{border:1.5px solid #D4AF37;border-radius:12px;padding:12px;text-align:left;margin-bottom:10px}
+.post b{font-size:15px}.post p{color:#fff;font-size:14px;line-height:1.5;margin:6px 0}
+.actions{display:flex;gap:6px;margin-top:8px}.actions button{flex:1;padding:8px;border-radius:8px;border:1px solid #D4AF37;background:#000;color:#E8C566;cursor:pointer;font-size:12px;font-weight:bold}
+.actions button.on{background:#E8C566;color:#000}
+.row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:.5px solid #D4AF37;text-align:left}
+.ava{width:44px;height:44px;border-radius:50%;background:#E8C566;color:#000;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;overflow:hidden}
+.ava img{width:100%;height:100%;object-fit:cover}
+.row b{flex:1;font-size:15px}.row small{display:block;color:#fff;font-size:11px;font-weight:normal}
+.mini{border:1px solid #D4AF37;background:#000;color:#E8C566;border-radius:8px;padding:7px 10px;cursor:pointer;font-weight:bold;font-size:12px}
+.mini.done{background:#E8C566;color:#000}
+.story-row{display:flex;gap:10px;overflow:auto;padding:6px 0}
+.story{min-width:78px;height:120px;border:1.5px solid #D4AF37;border-radius:12px;padding:8px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;background:#111}
+.story span{font-size:12px;color:#fff}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#000;border-top:1.5px solid #D4AF37;display:flex;justify-content:space-around;padding:10px 4px;z-index:99}
+.bottom button{background:none;border:none;color:#E8C566;font-size:11px;cursor:pointer;padding:6px}
+.bottom button.on{color:#fff;font-weight:bold}
+.ghost-mode{border:1.5px dashed #E8C566;padding:12px;border-radius:12px;margin-bottom:12px}
+.pro-pic{width:90px;height:90px;border-radius:50%;background:#E8C566;color:#000;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 10px;overflow:hidden}
+.pro-pic img{width:100%;height:100%;object-fit:cover}
+/* WHATSAPP CHAT - EXACTLY LIKE WHATSAPP */
+.wa-top{display:flex;align-items:center;gap:10px;background:#111;border:1.5px solid #D4AF37;border-radius:12px;padding:10px;text-align:left;margin-bottom:8px}
+.wa-top b{flex:1}.wa-top small{display:block;color:#25D366;font-size:11px}
+.wa-list{text-align:left}
+.wa-item{display:flex;align-items:center;gap:10px;padding:12px 6px;border-bottom:.5px solid #333;cursor:pointer;text-align:left}
+.wa-item b{flex:1;font-size:15px}.wa-item small{display:block;color:#aaa;font-size:12px;font-weight:normal}
+.wa-badge{background:#25D366;color:#000;border-radius:50%;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;padding:0 5px}
+.wa-time{font-size:11px;color:#aaa}
+.wa-chatbox{background:#0b141a;border:1.5px solid #D4AF37;border-radius:12px;padding:10px;min-height:340px;text-align:left;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.wa-bubble{max-width:82%;padding:8px 10px 6px;border-radius:12px;font-size:14px;line-height:1.4;position:relative;color:#fff;word-break:break-word}
+.wa-bubble.me{align-self:flex-end;background:#E8C566;color:#000;border-bottom-right-radius:2px}
+.wa-bubble.them{align-self:flex-start;background:#202c33;color:#fff;border-bottom-left-radius:2px}
+.wa-bubble .t{display:block;text-align:right;font-size:10px;opacity:.7;margin-top:4px}
+.wa-input{display:flex;gap:6px;margin-top:10px;align-items:center}
+.wa-input input{flex:1;background:#202c33;border:1.5px solid #D4AF37;border-radius:25px;color:#fff;padding:12px 14px;outline:none;font-size:14px}
+.wa-circle{width:44px;height:44px;border-radius:50%;background:#E8C566;color:#000;border:none;font-size:20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.wa-day{align-self:center;background:#182229;color:#E8C566;font-size:11px;padding:5px 12px;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div id="s-welcome"><h1 class="big">GHOST</h1><div class="ghost">👻</div><div class="book">📖</div><div class="welcome-txt">WELCOME TO GHOST<br>WE HAVE BEEN WAITING FOR YOU<br>PLEASE LOGIN</div><button class="btn btn-o" onclick="show('s-login')">LOGIN</button><div class="or">OR</div><button class="btn btn-o" onclick="show('s-create')">CREATE ACCOUNT</button></div>
+
+<div id="s-login" class="hidden"><button class="back" onclick="show('s-welcome')">← Back</button><h1>GHOST</h1><div class="ghost">👻</div><div class="book">📖</div><div class="card"><h2>PLEASE YOUR NUMBER</h2><div class="field"><input id="loginNumber" type="tel" placeholder="NUMBER"></div><div class="field"><input id="loginPass" type="password" placeholder="PASSWORD"><button class="eye" onclick="tog('loginPass')">👁️</button></div><button class="btn btn-g" onclick="doLogin()">LOGIN</button><div class="small" onclick="show('s-find')">Forgotten password?</div><div class="msg" id="loginMsg"></div><hr class="line"><button class="btn btn-o" onclick="show('s-create')">CREATE ACCOUNT</button></div></div>
+
+<div id="s-find" class="hidden"><h1>👻 GHOST</h1><div class="card"><h2>Find Your Account</h2><div class="sub">Please enter your number to search for your account</div><div class="field"><input id="findNumber" type="tel" placeholder="NUMBER"></div><button class="btn btn-g" onclick="doFind()">SEARCH</button><div class="small" onclick="show('s-login')">Cancel</div><div class="msg" id="findMsg"></div></div><br><button class="btn btn-o" onclick="show('s-login')">Back to Login</button></div>
+
+<div id="s-create" class="hidden"><button class="back" onclick="show('s-welcome')">← Back</button><h1>GHOST 👻</h1><div class="card"><h2>Create a New Account</h2><div class="sub">It is quick and easy</div><div class="field"><input id="firstName" placeholder="FIRST NAME"></div><div class="field"><input id="surname" placeholder="SURNAME"></div><div class="field"><input id="createNumber" type="tel" placeholder="NUMBER"></div><div class="field"><input id="createPass" type="password" placeholder="NEW PASSWORD"><button class="eye" onclick="tog('createPass')">👁️</button></div><div style="text-align:left;font-size:13px;margin:6px 0 8px">Date of Birth</div><div class="dob"><select id="dDay"><option value="">Day</option></select><select id="dMonth"><option value="">Month</option><option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option><option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option></select><select id="dYear"><option value="">Year</option></select></div><button class="btn btn-g" onclick="doCreate()">SIGN UP</button><div class="msg" id="createMsg"></div><div class="small" onclick="show('s-login')">Already have an account? Login.</div></div></div>
+
+<div id="s-verify" class="hidden"><h1>GHOST</h1><div class="ghost">👻</div><div class="book">📖</div><div class="card"><h2>Check Your Number</h2><div class="sub">We sent a 6-digit code to your number</div><div class="demo" id="verifyDemo"></div><div class="code-row" id="verifyRow"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"></div><button class="btn btn-g" onclick="doVerify()">VERIFY CODE</button><div class="small" onclick="resend('verify')">Didn't get code? Resend Code</div><div class="msg" id="verifyMsg"></div><hr class="line"><button class="btn btn-o" onclick="show('s-login')">Back to Login</button></div></div>
+
+<div id="s-reset" class="hidden"><h1>👻 GHOST</h1><div class="card"><h2>Reset Your Password</h2><div class="sub">We sent a 6-digit code to your number</div><div class="demo" id="resetDemo"></div><div class="code-row" id="resetRow"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"></div><div class="field"><input id="newPass" type="password" placeholder="NEW PASSWORD"><button class="eye" onclick="tog('newPass')">👁️</button></div><button class="btn btn-g" onclick="doReset()">RESET PASSWORD</button><div class="msg" id="resetMsg"></div></div><br><button class="btn btn-o" onclick="show('s-login')">Back to Login</button></div>
+
+<div id="s-home" class="hidden"><div class="topbar"><b>👻 GHOST</b><span>🔍 <span onclick="show('s-search')" style="cursor:pointer">Search</span> 🔔 <span onclick="show('s-notif')" style="cursor:pointer">3</span></span><span class="coins" id="coinLabel">🪙 0 Coins</span></div><div class="ghost-mode"><b>👻 Ghost Mode: <span id="ghostState">OFF</span></b><br><span style="color:#fff;font-size:12px">When ON, nobody go see say you dey online.</span><br><button class="mini" onclick="toggleGhost()">TURN GHOST MODE ON / OFF</button></div><div class="story-row" id="storyRow"></div><div class="card"><h2 id="helloUser">Welcome!</h2><div class="field"><textarea id="postText" placeholder="What's on your mind?"></textarea></div><button class="btn btn-g" onclick="addPost()">POST</button><button class="btn btn-o" onclick="show('s-reels')">+ REEL / VIDEO</button></div><div class="tabs"><span class="tab on" onclick="filterFeed('all',this)">All</span><span class="tab" onclick="filterFeed('friends',this)">Friends</span><span class="tab" onclick="filterFeed('groups',this)">Groups</span><span class="tab" onclick="show('s-market')">Marketplace</span></div><div id="posts"></div></div>
+
+<div id="s-profile" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><div class="card"><div class="pro-pic" id="proPic">👤</div><h2 id="proName">Your Name</h2><div class="sub" id="proBio">I am a Ghost. Quiet but real. 👻</div><div class="field"><input id="editBio" placeholder="Edit your bio..."></div><button class="btn btn-g" onclick="saveBio()">SAVE BIO</button><button class="btn btn-o" onclick="pickPic()">CHANGE PROFILE PICTURE</button><input type="file" id="picInput" accept="image/*" class="hidden"><div class="sub">Your Posts: <b id="myPostCount">0</b> • Coins: <b id="proCoins">0</b></div><button class="btn btn-o" onclick="show('s-settings')">SETTINGS</button><button class="btn btn-o" onclick="logout()">LOGOUT</button></div><div id="myPosts"></div></div>
+
+<div id="s-friends" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">FRIENDS</h1><div class="card" style="text-align:left"><h2 style="text-align:center">People You May Know</h2><div class="sub" style="text-align:center">These na people wey don create account for GHOST</div><div id="friendsList"></div><div id="friendsEmpty" class="sub">No other users yet. You be first Ghost. When your friends join, dem go show here.</div></div></div>
+
+<div id="s-search" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">SEARCH</h1><div class="card"><div class="field"><input id="searchInput" placeholder="Search people, groups..." oninput="doSearch()"></div><div id="searchResult" style="text-align:left"></div></div></div>
+
+<div id="s-notif" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">NOTIFICATIONS</h1><div id="notifList"></div></div>
+
+<!-- WHATSAPP CHAT LIST -->
+<div id="s-chat" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><div class="wa-top"><div class="ava" style="width:38px;height:38px">👻</div><b>Chats<span style="display:block;color:#fff;font-weight:normal;font-size:12px">GHOST Chat - Like WhatsApp</span></b><span style="font-size:20px">📷 &nbsp; ⋮</span></div><div class="card" style="padding:10px"><div class="field" style="margin:0"><input id="waSearch" placeholder="🔍 Search chat..." oninput="renderWAList()"></div></div><div class="wa-list" id="waList"></div><div class="card"><div class="sub">Start new chat with name:</div><div class="field"><input id="newChatName" placeholder="Type friend name... e.g. Ada"></div><button class="btn btn-g" onclick="startNewChat()">+ NEW CHAT</button></div></div>
+
+<!-- WHATSAPP OPEN CHAT -->
+<div id="s-chat-open" class="hidden"><div class="wa-top"><span onclick="show('s-chat')" style="cursor:pointer;font-size:22px">←</span><div class="ava" id="waAva">A</div><b><span id="waName">Ada</span><small id="waStatus">Online</small></b><span style="font-size:20px">📹 &nbsp; 📞</span></div><div class="wa-chatbox" id="waBox"></div><div class="wa-input"><button class="wa-circle" onclick="alert('Emoji picker - like WhatsApp 😊')">😊</button><input id="waInput" placeholder="Message..." onkeydown="if(event.key==='Enter')sendWA()"><button class="wa-circle" onclick="alert('Attach - Photo / File like WhatsApp 📎')">📎</button><button class="wa-circle" onclick="alert('Hold to record voice note like WhatsApp 🎤')">🎤</button><button class="wa-circle" onclick="sendWA()" style="background:#25D366">➤</button></div><div class="small" onclick="show('s-chat')">← Back to Chats</div></div>
+
+<div id="s-groups" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">GROUPS</h1><div class="card"><div class="field"><input id="groupName" placeholder="Group name, e.g. Lagos Ghosts"></div><button class="btn btn-g" onclick="createGroup()">CREATE GROUP</button></div><div id="groupList"></div></div>
+
+<div id="s-stories" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">STORIES</h1><div class="card"><div class="field"><input id="storyText" placeholder="Your story for 24 hours..."></div><button class="btn btn-g" onclick="addStory()">POST STORY</button></div></div>
+
+<div id="s-reels" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">REELS / VIDEOS</h1><div class="card"><div class="field"><input id="reelTitle" placeholder="Reel title..."></div><button class="btn btn-g" onclick="addReel()">POST REEL</button><div class="sub">Reels go show for Home like Facebook Reels.</div></div><div id="reelList"></div></div>
+
+<div id="s-market" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">MARKETPLACE</h1><div class="card"><div class="field"><input id="itemName" placeholder="What you wan sell? e.g. Phone"></div><div class="field"><input id="itemPrice" placeholder="Price e.g. 50000"></div><button class="btn btn-g" onclick="addItem()">SELL ITEM</button></div><div id="marketList"></div></div>
+
+<div id="s-live" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">LIVE VIDEO</h1><div class="card"><h2>🔴 Go Live</h2><div class="sub">For real app, camera go open here. For now, this na demo live.</div><button class="btn btn-g" onclick="goLive()">START LIVE</button><div class="msg" id="liveMsg"></div></div></div>
+
+<div id="s-book" class="hidden"><button class="back" onclick="show('s-home')">← Home</button><h1 style="font-size:28px">📖 GHOST BOOK</h1><div class="card"><div class="sub">Your private diary. Only you go see am. Nobody else.</div><div class="field"><textarea id="bookText" placeholder="Write your secret here..."></textarea></div><button class="btn btn-g" onclick="saveBook()">SAVE TO GHOST BOOK</button><div class="msg" id="bookMsg"></div></div><div id="bookList"></div></div>
+
+<div id="s-settings" class="hidden"><button class="back" onclick="show('s-profile')">← Profile</button><h1 style="font-size:28px">SETTINGS</h1><div class="card"><h2>Account</h2><div class="field"><input id="setName" placeholder="Change Name"></div><button class="btn btn-g" onclick="changeName()">CHANGE NAME</button><button class="btn btn-o" onclick="toggleGhost()">GHOST MODE ON / OFF</button><button class="btn btn-o" onclick="logout()">LOGOUT</button><button class="btn btn-o" onclick="if(confirm('Delete all GHOST data?')){localStorage.clear();location.reload()}">DELETE MY DATA</button></div></div>
+
+<div id="bottomNav" class="bottom hidden"><button onclick="show('s-home')">🏠<br>Home</button><button onclick="show('s-friends')">👥<br>Friends</button><button onclick="show('s-reels')">🎬<br>Reels</button><button onclick="show('s-market')">🛒<br>Market</button><button onclick="show('s-chat')">💬<br>Chat</button><button onclick="show('s-book')">📖<br>Book</button><button onclick="show('s-profile')">👤<br>Profile</button></div>
+
+</div>
+<script>
+let coins=parseInt(localStorage.getItem('ghost_coins')||'0');
+let ghostOn=localStorage.getItem('ghost_on')==='1';
+let currentFilter='all';
+let currentChat='';
+function saveCoins(){localStorage.setItem('ghost_coins',coins);let el=document.getElementById('coinLabel');if(el)el.textContent='🪙 '+coins+' Coins';let p=document.getElementById('proCoins');if(p)p.textContent=coins;}
+for(let d=1;d<=31;d++){let o=document.createElement('option');o.textContent=d;o.
